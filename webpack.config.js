@@ -44,6 +44,13 @@ module.exports = {
 	entry: {
         index: './src/js/index.jsx'
     },
+    resolve: {
+        alias: {
+            js: path.resolve(__dirname, 'src/js/'),
+            scss: path.resolve(__dirname, 'src/scss/'),
+            img: path.resolve(__dirname, 'src/img/')
+        }
+    },
 	output: {
 		path: outputPath,
 		// publicPath: '/dist/',
