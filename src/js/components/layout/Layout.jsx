@@ -15,6 +15,7 @@ class Layout extends React.Component {
 				<Nav/>
 				<Carousel/>
 				<Header title={this.state.title}/>
+				{this.props.children}
 				<Footer/>
 			</div>
 		);

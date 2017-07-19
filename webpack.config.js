@@ -1,5 +1,6 @@
 const path = require('path');
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin'),
+      historyApiFallback = require('connect-history-api-fallback');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -15,18 +16,18 @@ let devtool,                // 设置source-map的类型
     imageUse;               // 设置使用的图片工具
 
 if (DEVELOPMENT) {
-    devtool = 'cheap-module-source-map';
+    devtool = 'cheap-module-eval-source-map';
     filename = {
         js: 'js/[name].js',
         css: 'css/[name].css',
     };
     outputPath = path.resolve(__dirname, 'dev');
-    pathsToClean = [];
+    pathsToClean = ['dev'];
     imageUse = [
         'url-loader?limit=20000&name=img/[name]-[hash:12].[ext]'
     ];
 }else{
-    devtool = 'cheap-module-eval-source-map';
+    devtool = 'cheap-module-source-map';
     filename = {
         js: 'js/[name]-[chunkhash].js',
         css: 'css/[name]-[chunkhash].css',
@@ -114,7 +115,8 @@ module.exports = {
     		host: 'localhost',
     		port: 7777,
     		server: {
-    			baseDir: ['./dist', './dev']
+    			baseDir: ['./dist', './dev'],
+                middleware: [ historyApiFallback() ]
     		}
     	}),
         new webpack.optimize.ModuleConcatenationPlugin()
