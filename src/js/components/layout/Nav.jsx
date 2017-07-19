@@ -9,6 +9,8 @@ class Nav extends React.Component {
 		var myCollapseInit = new Collapse(collapseLink);
 	}
 	render() {
+		const classWelcome = location.pathname == '/'?'active':'',
+			  classLuozi   = location.pathname == '/luozi'?'active':'';
 		return (
 			<nav class="navbar navbar-default">
 			    <div class="container-fluid">
@@ -25,10 +27,10 @@ class Nav extends React.Component {
 			        </div>
 			        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
-						    <li class={location.pathname == '/'?'active':''}>
+						    <li class={classWelcome}>
 						    	<Link to="/">欢迎光临 <span class="sr-only">(current)</span></Link>
 						    </li>
-						    <li class={location.pathname == '/luozi'?'active':''}>
+						    <li class={classLuozi}>
 						    	<Link to="/luozi">骡子大人</Link>
 						    </li>
 						</ul>
