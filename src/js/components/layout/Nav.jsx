@@ -2,20 +2,26 @@ import React from "react";
 import {Link} from 'react-router-dom';
 
 class Nav extends React.Component {
-	componentDidMount() {
-		// grab the accordion by its ID
-		var collapseLink = document.getElementById('collapseLink');
-		// initialize the component for this collapse trigger
-		var myCollapseInit = new Collapse(collapseLink);
+	constructor(props) {
+		super(props);
+		this.state = {collapsed : true};
 	}
+
+	collapseHandler = () => {
+		this.setState({
+			collapsed : !this.state.collapsed
+		})
+	}
+
 	render() {
 		const classWelcome = location.pathname === '/' ? 'active' : '',
-			  classLuozi   = /^\/luozi/.test(location.pathname) ? 'active' : '';
+			  classLuozi   = /^\/luozi/.test(location.pathname) ? 'active' : '',
+			  classNav	   = this.state.collapsed ? 'collapse' : '';
 		return (
 			<nav class="navbar navbar-default">
 			    <div class="container-fluid">
 			        <div class="navbar-header">
-			            <button id="collapseLink" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+			            <button type="button" class="navbar-toggle" onClick={this.collapseHandler}>
 			                <span class="sr-only">Toggle navigation</span>
 			                <span class="icon-bar"></span>
 			                <span class="icon-bar"></span>
@@ -25,13 +31,13 @@ class Nav extends React.Component {
 			            	<span class="navbar-brand" href="#">骡子窝</span>
 			            </Link>
 			        </div>
-			        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			        <div class={"navbar-collapse " + classNav}>
 						<ul class="nav navbar-nav">
 						    <li class={classWelcome}>
-						    	<Link to="/">欢迎光临 <span class="sr-only">(current)</span></Link>
+						    	<Link to="/" onClick={this.collapseHandler}>欢迎光临 <span class="sr-only">(current)</span></Link>
 						    </li>
 						    <li class={classLuozi}>
-						    	<Link to="/luozi">骡子大人</Link>
+						    	<Link to="/luozi" onClick={this.collapseHandler}>骡子大人</Link>
 						    </li>
 						</ul>
 			            <ul class="nav navbar-nav navbar-right">
