@@ -9,8 +9,8 @@ class Nav extends React.Component {
 		var myCollapseInit = new Collapse(collapseLink);
 	}
 	render() {
-		const classWelcome = location.pathname == '/'?'active':'',
-			  classLuozi   = location.pathname == '/luozi'?'active':'';
+		const classWelcome = location.pathname === '/' ? 'active' : '',
+			  classLuozi   = /^\/luozi/.test(location.pathname) ? 'active' : '';
 		return (
 			<nav class="navbar navbar-default">
 			    <div class="container-fluid">
