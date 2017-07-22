@@ -7,14 +7,13 @@ import Footer from './Footer.jsx';
 class Layout extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {title: 'Header!'};
 	}
 	render() {
 		return (
 			<div>
 				<Nav/>
 				<Carousel/>
-				<Header title={this.state.title}/>
+				<Header/>
 				{this.props.children}
 				<Footer/>
 			</div>

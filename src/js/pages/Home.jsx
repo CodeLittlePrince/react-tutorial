@@ -11,7 +11,7 @@ class Home extends React.Component {
 		});
 		return (
 			<div>
-				<h1>欢迎来到骡子窝!</h1>
+				<h2>欢迎来到骡子窝!</h2>
 				<ul class="list-group">
 					{list}
 				</ul>

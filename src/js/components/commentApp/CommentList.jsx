@@ -12,7 +12,9 @@ export default class CommentList extends React.Component {
 		return (
 			<ul class="list-group">
 				{this.props.comments.map((comment, index) => {
-					return <Comment comment={comment} key={index}/>;
+					// 注意：这里用index作为key，会让新发布的评论时间出错。
+					return <Comment comment={comment} key={comment.createdAt} index={index}
+							deleteCommentHandler={this.props.deleteCommentHandler}/>;
 					})
 				}
 			</ul>

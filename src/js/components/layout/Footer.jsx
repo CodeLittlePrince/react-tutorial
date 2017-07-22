@@ -2,7 +2,7 @@ import React from "react";
 
 class Footer extends React.Component {
 	render() {
-		return <h1>Footer!</h1>;
+		return <h3>我是尾部</h3>;
 	}
 }
 

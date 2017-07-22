@@ -9,6 +9,23 @@ export default class CommentForm extends React.Component {
 			canSubmit: false
 		};
 	}
+	componentDidMount() {
+		this._commentFocus(this.refs.comment);
+	}
+	componentWillMount() {
+		this._getUsernameFromLocal();
+	}
+	// 组件挂载完以后触发评论自动聚焦
+	_commentFocus(commentInput) {
+		commentInput.focus();
+	}
+	// 取localStrorage，有username则渲染上
+	_getUsernameFromLocal() {
+		let username = localStorage.getItem('username');
+		if (username) {
+			this.setState({username: username});
+		}
+	}
 	// input和textarea输入处理
 	inputHandler(e) {
 		let name = e.target.name;
@@ -39,6 +56,10 @@ export default class CommentForm extends React.Component {
 		// 如果可以提交，将数据提升到父组件，这样父组件才能把数据给到CommentList组件
 		this.props.submitHandler(this.state.username, this.state.comment);
 	}
+	// blur用户名，就将用户名存储到localStorage
+	blurHandler(e) {
+		localStorage.setItem('username', e.target.value);
+	}
 	render() {
 		return (
 			<div className="container">
@@ -49,6 +70,7 @@ export default class CommentForm extends React.Component {
 					      	<input type="text" class="form-control"
 					      		placeholder="用户名" name="username"
 					      		ref="username" value={this.state.username}
+					      		onBlur={this.blurHandler.bind(this)}
 					      		onChange={this.inputHandler.bind(this)}/>
 					    </div>
 					</div>
