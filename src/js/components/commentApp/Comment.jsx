@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
 export default class Comment extends React.Component {
 	constructor(props) {
@@ -54,7 +55,7 @@ export default class Comment extends React.Component {
 			.replace(/`([\S\s]+?)`/g, '<code>$1</code>')
 	}
 	deleteCommentHandler(index, e) {
-		this.props.deleteCommentHandler(index);
+		this.props.onDeleteComment(index);
 	}
 	render() {
 		const comment = this.props.comment;
@@ -64,7 +65,7 @@ export default class Comment extends React.Component {
 					<div class="pull-left">
 						<span>{comment.username}: </span>
 						<span
-							dangerouslySetInnerHTML={{__html: this._getProcessedContent(comment.comment)}}
+							dangerouslySetInnerHTML={{__html: this._getProcessedContent(comment.content)}}
 						/>
 					</div>
 					<span class="pull-right">{this.state.timeString}</span>

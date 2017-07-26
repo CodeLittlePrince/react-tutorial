@@ -1,30 +1,24 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class CommentForm extends React.Component {
+	static propTypes = {
+		username: PropTypes.string
+	}
 	constructor(props) {
 		super(props);
 		this.state = {
-			username: '',
-			comment: '',
+			username: this.props.username,
+			content: '',
 			canSubmit: false
 		};
 	}
 	componentDidMount() {
-		this._commentFocus(this.refs.comment);
-	}
-	componentWillMount() {
-		this._getUsernameFromLocal();
+		this._contentFocus(this.refs.content);
 	}
 	// 组件挂载完以后触发评论自动聚焦
-	_commentFocus(commentInput) {
-		commentInput.focus();
-	}
-	// 取localStrorage，有username则渲染上
-	_getUsernameFromLocal() {
-		let username = localStorage.getItem('username');
-		if (username) {
-			this.setState({username: username});
-		}
+	_contentFocus(contentInput) {
+		contentInput.focus();
 	}
 	// input和textarea输入处理
 	inputHandler(e) {
@@ -32,8 +26,8 @@ export default class CommentForm extends React.Component {
 		this.setState({
 			[name]: e.target.value
 		});
-		// 判断是否填入了username和comment，缺一不可。
-		if (this.refs.username.value.length > 0 && this.refs.comment.value.length > 0) {
+		// 判断是否填入了username和content，缺一不可。
+		if (this.refs.username.value.length > 0 && this.refs.content.value.length > 0) {
 			this.setState({
 				canSubmit: true
 			});
@@ -50,15 +44,10 @@ export default class CommentForm extends React.Component {
 			return;
 		}
 		this.setState({
-			comment: '',
-			canSubmit: false
+			canSubmit: false,
+			content: ''
 		});
-		// 如果可以提交，将数据提升到父组件，这样父组件才能把数据给到CommentList组件
-		this.props.submitHandler(this.state.username, this.state.comment);
-	}
-	// blur用户名，就将用户名存储到localStorage
-	blurHandler(e) {
-		localStorage.setItem('username', e.target.value);
+		this.props.onSubmit(this.state.username, this.state.content);
 	}
 	render() {
 		return (
@@ -70,7 +59,7 @@ export default class CommentForm extends React.Component {
 					      	<input type="text" class="form-control"
 					      		placeholder="用户名" name="username"
 					      		ref="username" value={this.state.username}
-					      		onBlur={this.blurHandler.bind(this)}
+					      		onBlur={this.props.blurHandler}
 					      		onChange={this.inputHandler.bind(this)}/>
 					    </div>
 					</div>
@@ -78,7 +67,7 @@ export default class CommentForm extends React.Component {
 				    	<label class="col-sm-2 control-label">评论</label>
 					    <div class="col-sm-10">
 					      	<textarea class="form-control" placeholder="评论"
-					      		name="comment" ref="comment" value={this.state.comment}
+					      		name="content" ref="content" value={this.state.content}
 					      		onChange={this.inputHandler.bind(this)}>
 					      	</textarea>
 					    </div>
