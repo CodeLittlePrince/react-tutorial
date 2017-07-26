@@ -13,14 +13,6 @@ class CommentFormContainer extends React.Component {
 	componentWillMount() {
 		this._getUsernameFromLocal();
 	}
-	// 从localStorage中取评论信息
-	_getCommentsFromLocal() {
-		let comments = JSON.parse(localStorage.getItem('comments'));
-		if (comments) {
-			return comments;
-		}
-		return [];
-	}
 	// 取localStrorage，有username则渲染上
 	_getUsernameFromLocal() {
 		let username = localStorage.getItem('username');
@@ -38,7 +30,7 @@ class CommentFormContainer extends React.Component {
 	}
 	// submit评论处理
 	submitHandler(username, content) {
-		let comments = this._getCommentsFromLocal();
+		let comments = this.props.comments;
 		// 将新评论插入原有的评论中
 		comments.unshift({
 			username,
